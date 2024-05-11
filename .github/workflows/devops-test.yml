@@ -1,0 +1,15 @@
+name: node_app
+
+on: # specify the build to trigger the automated ci/cd
+    push:
+        branches:
+            - "master"
+
+jobs:
+    build:
+        name: Build Docker image
+        runs-on: ubuntu-latest # specify the build machine
+        steps:
+            - # checkout to the repository on the build machine
+                name: Checkout
+                uses: actions/checkout@v3
