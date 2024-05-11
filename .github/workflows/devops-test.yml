@@ -19,6 +19,12 @@ jobs:
                 with:
                   username: ${{secrets.DOCKERHUB_USERNAME}}
                   password: ${{secrets.DOCKERHUB_PASSWORD}}
+            - name: Extract metadata (tags, labels) for Docker
+              id: meta
+              uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+              with:
+               images: talwinder058/tl-devops-test
+
             - # create a build kit builder instance
                 name: Set up Docker Buildx
                 uses: docker/setup-buildx-action@v2
@@ -30,4 +36,4 @@ jobs:
                   context: .
                   file: ./Dockerfile
                   push: true
-                  tags: talwinder058/tl-devops-test:release-1
+                  tags: ${{ steps.meta.outputs.tags }}
