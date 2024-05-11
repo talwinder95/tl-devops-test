@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app_labels }} 
+  labels:
+    app: {{ .Values.app_labels }}
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: {{ .Values.app_labels }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app_labels }}
+    spec:
+      containers:
+      - name: {{ .Values.container_name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        resources:
+          requests:
+            cpu: "100m"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: 3000

@@ -1,0 +1,12 @@
+app_labels: devops-demo-deployment
+container_name: devops-demo-container
+service_name: devops-demo-service
+
+image:
+  repository: talwinder058/tl-devops-test
+  tag: main
+  pullPolicy: Always
+
+
+
+
