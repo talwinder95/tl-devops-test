@@ -1,0 +1,39 @@
+# Creating Project in Argpcd
+
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: devops-argo-project
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Example project used to demonstrate Declarative deployments in ArgoCD
+  sourceRepos:
+  - '*'
+  destinations:
+  - namespace: default
+    server: https://kubernetes.default.svc
+
+---
+
+# Creating Application in Argocd
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: devops-argocd-demo-app
+  namespace: argocd
+spec:
+  project: devops-argo-project
+  source:
+    repoURL: 'https://github.com/talwinder95/tl-devops-test.git'
+    targetRevision: main
+    path: "devops-helm"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
